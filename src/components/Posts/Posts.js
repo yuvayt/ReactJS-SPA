@@ -41,8 +41,9 @@ const Posts = () => {
     post.title.toLowerCase().includes(searchInput.toLowerCase())
   );
 
-  const removePost = ({ index }) => {
-    setPosts({ posts: posts.filter((_, id) => id !== index) });
+  const removePost = (e) => {
+    let removeId = e.target.getAttribute("removeId");
+    setPosts(posts.filter((post) => post.id != removeId));
   };
 
   const getPostsSorted = () => {
@@ -95,7 +96,9 @@ const Posts = () => {
               <td>{title}</td>
               <td>
                 <Link to={`${id}`}>Detail</Link>
-                <button onClick={removePost(id)}>Delete</button>
+                <button removeId={id} onClick={removePost}>
+                  Delete
+                </button>
               </td>
             </tr>
           ))}
