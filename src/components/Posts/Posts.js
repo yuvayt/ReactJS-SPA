@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import "./Posts.css";
 
 const Posts = () => {
   const [posts, setPosts] = useState(() => []);
@@ -18,7 +19,6 @@ const Posts = () => {
       .then(({ data }) => {
         if (!didCancel) {
           setPosts(data);
-          console.log(data);
           setLoading(false);
         }
       })
@@ -34,7 +34,7 @@ const Posts = () => {
     };
   }, []);
 
-  if (loading) return <h1>Loading....</h1>;
+  if (loading) return <h1 style={{ textAlign: "center" }}>Loading....</h1>;
   if (error) return <p style={{ color: "red" }}> {error}</p>;
 
   let postsFiltered = posts.filter((post) =>
@@ -76,27 +76,36 @@ const Posts = () => {
     <div>
       <div>
         <input
+          className="Posts-search"
           type="text"
           placeholder="Type to search"
           onChange={(evt) => setSearchInput(evt.target.value)}
         />
       </div>
-      <table>
+      <table style={{ marginLeft: 30 }}>
         <thead>
           <tr>
-            <th>ID</th>
-            <th onClick={handleSortName}>Title {sortValue}</th>
-            <th>Actions</th>
+            <th className="Posts-t">ID</th>
+            <th className="Posts-t" onClick={handleSortName}>
+              Title {sortValue}
+            </th>
+            <th className="Posts-t">Actions</th>
           </tr>
         </thead>
         <tbody>
           {postsSorted.map(({ id, title }) => (
             <tr key={id}>
-              <td>{id}</td>
-              <td>{title}</td>
-              <td>
-                <Link to={`${id}`}>Detail</Link>
-                <button removeId={id} onClick={removePost}>
+              <td className="Posts-t">{id}</td>
+              <td className="Posts-t">{title}</td>
+              <td className="Posts-t">
+                <Link className="Posts-actions" to={`${id}`}>
+                  Detail
+                </Link>
+                <button
+                  className="Posts-actions"
+                  removeId={id}
+                  onClick={removePost}
+                >
                   Delete
                 </button>
               </td>

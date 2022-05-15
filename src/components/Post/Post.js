@@ -18,7 +18,6 @@ const Post = ({ id }) => {
       url: `https://jsonplaceholder.typicode.com/posts/${id}`,
     })
       .then(({ data }) => {
-        console.log(data);
         if (!didCancel) {
           setPost({
             id: data.id,
@@ -40,7 +39,7 @@ const Post = ({ id }) => {
     };
   }, [id]);
 
-  if (loading) return <h1>Loading....</h1>;
+  if (loading) return <h1 style={{ textAlign: "center" }}>Loading....</h1>;
   if (error) return <p style={{ color: "red" }}> {error}</p>;
 
   return (

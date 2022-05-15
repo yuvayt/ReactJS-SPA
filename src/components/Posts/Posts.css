@@ -1,0 +1,14 @@
+.Posts-search {
+    margin: 30px;
+    border-radius: 2px;
+    text-align: center;
+}
+
+.Posts-actions{
+    margin: 5px;
+    padding: 5px;
+}
+
+.Posts-t{
+    border: solid 1px black;
+}

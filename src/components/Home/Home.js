@@ -1,7 +1,7 @@
 const Home = () => {
   return (
     <div>
-      <h3>
+      <h3 style={{ padding: "50px" }}>
         {" "}
         Lorem Ipsum is simply dummy text of the printing and typesetting
         industry. Lorem Ipsum has been the industry's standard dummy text ever
