@@ -1,25 +1,29 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { LoginContext } from "../../contexts/LoginContext";
-import { UserIdContext } from "../../contexts/UserIdContext";
-import Login from "../Login/Login";
-import { getTokens } from "../Login/LoginService";
+import { LoginContext } from "../contexts/LoginContext";
+import Login from "./Login";
+import { getTokens } from "./services/LoginService";
 
 const Profile = () => {
   const [profile, setProfile] = useState({
     id: null,
     name: null,
   });
+
+  const { login, setLogin } = useContext(LoginContext);
+  const [userId, setUserId] = useState("");
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const { login, setLogin } = useContext(LoginContext);
-  const { userId, setUserId } = useContext(UserIdContext);
 
   useEffect(() => {
     let didCancel = false;
     axios({
       method: "GET",
       url: `https://60dff0ba6b689e001788c858.mockapi.io/users/${userId}`,
+      headers: {
+        Authorization: userId,
+      },
     })
       .then(({ data }) => {
         if (!didCancel) {
@@ -28,8 +32,8 @@ const Profile = () => {
               id: data.id,
               name: data.name,
             });
+            setLoading(false);
           }
-          setLoading(false);
         }
       })
       .catch((err) => {
@@ -45,11 +49,12 @@ const Profile = () => {
     };
   }, [userId, login]);
 
-  if (loading) return <h1 style={{ textAlign: "center" }}>Loading....</h1>;
-  if (error) return <p style={{ color: "red" }}> {error}</p>;
-
-  console.log(profile);
-  console.log(login);
+  if (login && !userId) {
+    const tokens = getTokens();
+    if (tokens) {
+      setUserId(tokens.userId);
+    }
+  }
 
   if (!login) {
     return (
@@ -59,6 +64,9 @@ const Profile = () => {
       </div>
     );
   }
+
+  if (loading) return <h1 style={{ textAlign: "center" }}>Loading....</h1>;
+  if (error) return <p style={{ color: "red" }}> {error}</p>;
 
   return (
     <div style={{ margin: 30 }}>

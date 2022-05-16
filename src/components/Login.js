@@ -1,13 +1,11 @@
-import axios from "axios";
-import { useContext, useEffect, useState } from "react";
-import { LoginContext } from "../../contexts/LoginContext";
-import { UserIdContext } from "../../contexts/UserIdContext";
+import { useContext, useState } from "react";
+import { LoginContext } from "../contexts/LoginContext";
+
 import {
-  getTokens,
-  setTokens,
+  createTokens,
   validateEmail,
   validatePassword,
-} from "./LoginService";
+} from "./services/LoginService";
 
 const Login = () => {
   const [values, setValues] = useState({
@@ -19,39 +17,6 @@ const Login = () => {
     password: false,
   });
   const { login, setLogin } = useContext(LoginContext);
-  const { userId, setUserId } = useContext(UserIdContext);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    let didCancel = false;
-    axios({
-      method: "GET",
-      url: `https://60dff0ba6b689e001788c858.mockapi.io/tokens`,
-    })
-      .then(({ data }) => {
-        if (!didCancel && login) {
-          setTokens(data);
-          console.log("first");
-        }
-        setLoading(false);
-      })
-      .catch((err) => {
-        if (!didCancel) {
-          setLoading(false);
-          setError("Something went Wrong");
-        }
-      });
-
-    return () => {
-      didCancel = true;
-    };
-  }, [login]);
-
-  if (loading) return <h1 style={{ textAlign: "center" }}>Loading....</h1>;
-  if (error) return <p style={{ color: "red" }}> {error}</p>;
-
-  console.log(getTokens());
 
   const errorEmail = validateEmail(values.email);
   const errorPassword = validatePassword(values.password);
@@ -65,20 +30,12 @@ const Login = () => {
   };
 
   const handleSubmit = (evt) => {
-    if (errorEmail && errorPassword) return;
     evt.preventDefault();
-    //console.log(JSON.stringify(values));
+    setTouched({ email: true, password: true });
+    if (errorEmail || errorPassword) return;
+    createTokens();
     setLogin(true);
   };
-
-  if (login) {
-    const tokens = getTokens();
-    if (tokens) {
-      setUserId(tokens.userId);
-    }
-  }
-
-  console.log("qua day");
 
   return (
     <form onSubmit={handleSubmit}>
@@ -90,7 +47,6 @@ const Login = () => {
         placeholder="Email"
         name="email"
         type="text"
-        required
       />
       {touched.email && (
         <div style={{ color: "red", margin: 20 }}>{errorEmail}</div>
@@ -103,7 +59,6 @@ const Login = () => {
         placeholder="Password"
         name="password"
         type="password"
-        required
       />
       {touched.password && (
         <div style={{ color: "red", margin: 20 }}>{errorPassword}</div>

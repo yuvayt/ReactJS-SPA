@@ -1,8 +1,23 @@
+import axios from "axios";
+
 export const isLoggedIn = () => {
   const tokens = getTokens();
   if (!tokens) return false;
   if (tokens.token) return true;
   return false;
+};
+
+export const createTokens = () => {
+  axios({
+    method: "GET",
+    url: `https://60dff0ba6b689e001788c858.mockapi.io/tokens`,
+  })
+    .then(({ data }) => {
+      setTokens(data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 export const setTokens = (tokens) => {

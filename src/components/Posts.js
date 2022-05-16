@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "./Posts.css";
+import "./css/Posts.css";
 
 const Posts = () => {
   const [posts, setPosts] = useState(() => []);
@@ -49,15 +49,15 @@ const Posts = () => {
   const getPostsSorted = () => {
     if (sortValue === null) return postsFiltered;
     if (sortValue === "ASC")
-      return postsFiltered.sort((pA, pB) => {
-        if (pA.title.toLowerCase() < pB.title.toLowerCase()) return -1;
-        if (pA.title.toLowerCase() > pB.title.toLowerCase()) return 1;
+      return postsFiltered.sort((a, b) => {
+        if (a.title.toLowerCase() < b.title.toLowerCase()) return -1;
+        if (a.title.toLowerCase() > b.title.toLowerCase()) return 1;
         return 0;
       });
     if (sortValue === "DES")
-      return postsFiltered.sort((pA, pB) => {
-        if (pA.title.toLowerCase() < pB.title.toLowerCase()) return 1;
-        if (pA.title.toLowerCase() > pB.title.toLowerCase()) return -1;
+      return postsFiltered.sort((a, b) => {
+        if (a.title.toLowerCase() < b.title.toLowerCase()) return 1;
+        if (a.title.toLowerCase() > b.title.toLowerCase()) return -1;
         return 0;
       });
   };
