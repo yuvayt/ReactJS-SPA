@@ -5,7 +5,7 @@ import {
   createTokens,
   validateEmail,
   validatePassword,
-} from "./services/LoginService";
+} from "../services/LoginService";
 
 const Login = () => {
   const [values, setValues] = useState({

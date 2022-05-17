@@ -1,10 +1,10 @@
 import { Route, Routes } from "react-router-dom";
-import HomePage from "../pages/HomePage";
-import PostsOutlet from "../pages/outlets/PostsOutlet";
-import PostsPage from "../pages/PostsPage";
-import PostPage from "../pages/PostPage";
-import ProfilePage from "../pages/ProfilePage";
-import LoginPage from "../pages/LoginPage";
+import HomePage from "../../pages/HomePage";
+import PostsOutlet from "../../pages/outlets/PostsOutlet";
+import PostsPage from "../../pages/PostsPage";
+import PostPage from "../../pages/PostPage";
+import ProfilePage from "../../pages/ProfilePage";
+import LoginPage from "../../pages/LoginPage";
 
 const Routers = () => {
   return (

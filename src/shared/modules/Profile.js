@@ -2,7 +2,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { LoginContext } from "../contexts/LoginContext";
 import Login from "./Login";
-import { getTokens } from "./services/LoginService";
+import { getTokens } from "../services/LoginService";
 
 const Profile = () => {
   const [profile, setProfile] = useState({

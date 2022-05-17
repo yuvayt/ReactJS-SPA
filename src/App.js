@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { BrowserRouter } from "react-router-dom";
 import "./App.css";
-import Navbar from "./components/Navbar";
-import Routers from "./components/Routers";
-import { LoginContext } from "./contexts/LoginContext";
+import Navbar from "./shared/modules/Navbar";
+import Routers from "./shared/modules/Routers";
+import { LoginContext } from "./shared/contexts/LoginContext";
 
 const App = () => {
   const [login, setLogin] = useState(false);

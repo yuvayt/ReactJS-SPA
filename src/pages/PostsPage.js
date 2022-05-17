@@ -1,4 +1,4 @@
-import Posts from "../components/Posts";
+import Posts from "../shared/modules/Posts";
 
 const PostsPage = () => {
   return (
