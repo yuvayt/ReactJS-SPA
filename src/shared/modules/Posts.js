@@ -1,7 +1,17 @@
+import {
+  CircularProgress,
+  Container,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "../css/Posts.css";
 
 const Posts = () => {
   const [posts, setPosts] = useState(() => []);
@@ -34,7 +44,7 @@ const Posts = () => {
     };
   }, []);
 
-  if (loading) return <h1 style={{ textAlign: "center" }}>Loading....</h1>;
+  if (loading) return <CircularProgress color="inherit" />;
   if (error) return <p style={{ color: "red" }}> {error}</p>;
 
   let postsFiltered = posts.filter((post) =>
@@ -48,13 +58,13 @@ const Posts = () => {
 
   const getPostsSorted = () => {
     if (sortValue === null) return postsFiltered;
-    if (sortValue === "ASC")
+    if (sortValue === "asc")
       return postsFiltered.sort((a, b) => {
         if (a.title.toLowerCase() < b.title.toLowerCase()) return -1;
         if (a.title.toLowerCase() > b.title.toLowerCase()) return 1;
         return 0;
       });
-    if (sortValue === "DES")
+    if (sortValue === "des")
       return postsFiltered.sort((a, b) => {
         if (a.title.toLowerCase() < b.title.toLowerCase()) return 1;
         if (a.title.toLowerCase() > b.title.toLowerCase()) return -1;
@@ -66,55 +76,75 @@ const Posts = () => {
 
   const handleSortName = () => {
     setSortValue((current) => {
-      if (current === null) return "ASC";
-      if (current === "ASC") return "DES";
+      if (current === null) return "asc";
+      if (current === "asc") return "des";
       return null;
     });
   };
 
   return (
-    <div>
+    <Paper component={Container} elevation={3} sx={{ p: 2 }}>
       <div>
         <input
-          className="Posts-search"
           type="text"
           placeholder="Type to search"
           onChange={(evt) => setSearchInput(evt.target.value)}
         />
       </div>
-      <table style={{ marginLeft: 30 }}>
+
+      <TableContainer component={Paper}>
+        <Table sx={{ maxWidth: 1000 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>ID</TableCell>
+              <TableCell>Title</TableCell>
+              <TableCell align="right">Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {postsSorted.map((row) => (
+              <TableRow
+                key={row.id}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {row.id}
+                </TableCell>
+                <TableCell>{row.title}</TableCell>
+                <TableCell align="right">Actions go here</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Paper>
+  );
+};
+
+export default Posts;
+
+{
+  /* <table style={{ marginLeft: 30 }}>
         <thead>
           <tr>
-            <th className="Posts-t">ID</th>
-            <th className="Posts-t" onClick={handleSortName}>
-              Title {sortValue}
-            </th>
-            <th className="Posts-t">Actions</th>
+            <th>ID</th>
+            <th onClick={handleSortName}>Title {sortValue}</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {postsSorted.map(({ id, title }) => (
             <tr key={id}>
-              <td className="Posts-t">{id}</td>
-              <td className="Posts-t">{title}</td>
-              <td className="Posts-t">
-                <Link className="Posts-actions" to={`${id}`}>
-                  Detail
-                </Link>
-                <button
-                  className="Posts-actions"
-                  removeId={id}
-                  onClick={removePost}
-                >
+              <td>{id}</td>
+              <td>{title}</td>
+              <td>
+                <Link to={`${id}`}>Detail</Link>
+                <button removeId={id} onClick={removePost}>
                   Delete
                 </button>
               </td>
             </tr>
           ))}
         </tbody>
-      </table>
-    </div>
-  );
-};
-
-export default Posts;
+      </table> */
+}

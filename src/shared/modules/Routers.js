@@ -5,6 +5,7 @@ import PostsPage from "../../pages/PostsPage";
 import PostPage from "../../pages/PostPage";
 import ProfilePage from "../../pages/ProfilePage";
 import LoginPage from "../../pages/LoginPage";
+import LoremPage from "../../pages/LoremPage";
 
 const Routers = () => {
   return (
@@ -16,6 +17,7 @@ const Routers = () => {
       </Route>
       <Route path="/profile" element={<ProfilePage />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/lorem" element={<LoremPage />} />
     </Routes>
   );
 };

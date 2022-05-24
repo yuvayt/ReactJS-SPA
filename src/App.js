@@ -7,7 +7,7 @@ import { LoginContext } from "./shared/contexts/LoginContext";
 
 const App = () => {
   const [login, setLogin] = useState(false);
-
+  console.log("App: 10");
   return (
     <div className="App">
       <BrowserRouter>

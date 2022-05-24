@@ -1,12 +1,5 @@
 import axios from "axios";
 
-export const isLoggedIn = () => {
-  const tokens = getTokens();
-  if (!tokens) return false;
-  if (tokens.token) return true;
-  return false;
-};
-
 export const createTokens = () => {
   axios({
     method: "GET",
@@ -30,18 +23,20 @@ export const getTokens = () => {
   return null;
 };
 
-export const validateEmail = (email) => {
-  if (!email) return "Email is required";
-  const validEmail = String(email)
-    .toLowerCase()
-    .match(
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    );
-  if (!validEmail) return "Email invalid";
-  return "";
+export const displayError = ({ touched, err }) => {
+  if (!touched) return [false, ""];
+  if (touched) {
+    if (err) return [true, err];
+    if (!err) return [false, err];
+  }
 };
 
-export const validatePassword = (password) => {
-  if (password.length < 8) return "At least 8 characters";
-  return "";
-};
+// const [invalidUsername, textUsername] = getErrors({
+//   touched: touched.username,
+//   err: validateUsername(values.username),
+// });
+
+// const [invalidPassword, textPassword] = getErrors({
+//   touched: touched.username,
+//   err: validateUsername(values.password),
+// });

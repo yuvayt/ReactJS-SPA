@@ -1,26 +1,20 @@
-import { Backdrop, Box, Button, Typography } from "@mui/material";
+import { Backdrop, Box, Button } from "@mui/material";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import MenuItems from "./MenuItems";
+import Typographyz from "./Typographyz";
 
-const MegaMenu = ({ pages }) => {
+const pages = [
+  { name: "Posts", link: "posts" },
+  { name: "Lorem", link: "/" },
+  { name: "Ipsum", link: "/" },
+];
+
+const MegaMenu = () => {
   const sxBox = { flexGrow: 1 };
 
   const sxBackdrop = {
     backgroundColor: "rgba(0, 0, 0, 0.8)",
     zIndex: (theme) => theme.zIndex.drawer + 1,
-  };
-
-  const sxMenu = {
-    display: "grid",
-    gap: 5,
-    gridTemplateColumns: "repeat(2, 1fr)",
-  };
-
-  const sxItem = {
-    fontFamily: "monospace",
-    fontWeight: 600,
-    letterSpacing: ".2rem",
-    color: "white",
   };
 
   const [open, setOpen] = useState(false);
@@ -35,28 +29,11 @@ const MegaMenu = ({ pages }) => {
 
   return (
     <Box sx={sxBox}>
-      <Button
-        onClick={handleToggle}
-        sx={{
-          color: "white",
-          fontWeight: 700,
-          fontFamily: "monospace",
-          letterSpacing: ".15rem",
-          mt: 0.5,
-        }}
-      >
-        Menu
+      <Button onClick={handleToggle}>
+        <Typographyz text="Menu" />
       </Button>
       <Backdrop sx={sxBackdrop} open={open} onClick={handleClose}>
-        <Box sx={sxMenu}>
-          {pages.map((page) => (
-            <Link key={page.name} to={page.link} onClick={handleClose}>
-              <Typography variant="h6" textAlign="center" sx={sxItem}>
-                {page.name}
-              </Typography>
-            </Link>
-          ))}
-        </Box>
+        <MenuItems items={pages} />
       </Backdrop>
     </Box>
   );

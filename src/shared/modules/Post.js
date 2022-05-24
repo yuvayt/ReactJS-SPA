@@ -1,3 +1,4 @@
+import { CircularProgress } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -39,7 +40,7 @@ const Post = ({ id }) => {
     };
   }, [id]);
 
-  if (loading) return <h1 style={{ textAlign: "center" }}>Loading....</h1>;
+  if (loading) return <CircularProgress color="inherit" />;
   if (error) return <p style={{ color: "red" }}> {error}</p>;
 
   return (
