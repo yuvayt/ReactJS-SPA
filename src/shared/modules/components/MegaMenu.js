@@ -4,7 +4,7 @@ import MenuItems from "./MenuItems";
 import Typographyz from "./Typographyz";
 
 const pages = [
-  { name: "Posts", link: "posts" },
+  { name: "Manage User", link: "user" },
   { name: "Lorem", link: "/" },
   { name: "Ipsum", link: "/" },
 ];

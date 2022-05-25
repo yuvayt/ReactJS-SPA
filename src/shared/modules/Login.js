@@ -9,7 +9,7 @@ import {
 import { useContext, useState } from "react";
 import { LoginContext } from "../contexts/LoginContext";
 
-import { createTokens, displayError } from "../services/LoginService";
+import { createTokens } from "../services/LoginService";
 
 import {
   validateUsername,
@@ -20,28 +20,23 @@ import Typographyz from "./components/Typographyz";
 const Login = () => {
   const { login, setLogin } = useContext(LoginContext);
 
-  const [values, setValues] = useState({
-    username: "",
-    password: "",
-  });
+  const initialValues = { username: "", password: "" };
+  const [values, setValues] = useState(initialValues);
 
-  const [touched, setTouched] = useState({
+  const initialTouched = {
     username: false,
     password: false,
-  });
+  };
+  const [touched, setTouched] = useState(initialTouched);
 
-  const errorUsername = validateUsername(values.username);
-  const errorPassword = validatePassword(values.password);
-
-  const [displayErrorUsername, textUsername] = displayError({
-    touched: touched.username,
-    err: errorUsername,
-  });
-
-  const [displayErrorPassword, textPassword] = displayError({
-    touched: touched.password,
-    err: errorPassword,
-  });
+  const errors = {
+    username: touched.username
+      ? validateUsername(values.username)
+      : "Username here!",
+    password: touched.password
+      ? validatePassword(values.password)
+      : "Password here!",
+  };
 
   const handleOnBlur = (evt) => {
     setTouched({ ...touched, [evt.target.name]: true });
@@ -53,13 +48,19 @@ const Login = () => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    setTouched({ username: true, password: true });
-    if (errorUsername || errorPassword) {
-      return;
+    const touchedCopy = Object.assign({}, touched);
+    Object.keys(touchedCopy).forEach((p) => (touchedCopy[p] = true));
+    setTouched(touchedCopy);
+
+    for (const k in errors) {
+      if (errors[k]) {
+        return;
+      }
     }
+
     createTokens();
-    setTouched({ username: false, password: false });
-    setValues({ username: "", password: "" });
+    setTouched(initialTouched);
+    setValues(initialValues);
     setLogin(true);
   };
 
@@ -86,8 +87,8 @@ const Login = () => {
           value={values.username}
           onChange={handleChange}
           onBlur={handleOnBlur}
-          helperText={textUsername}
-          error={displayErrorUsername}
+          helperText={errors.username}
+          error={!!errors.username && touched.username}
         />
 
         <TextField
@@ -97,8 +98,8 @@ const Login = () => {
           value={values.password}
           onChange={handleChange}
           onBlur={handleOnBlur}
-          helperText={textPassword}
-          error={displayErrorPassword}
+          helperText={errors.password}
+          error={!!errors.password && touched.password}
         />
 
         <Button onClick={handleSubmit} variant="contained">

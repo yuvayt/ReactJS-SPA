@@ -1,9 +1,8 @@
 import { useParams } from "react-router-dom";
-import Post from "../shared/modules/Post";
 
-const PostPage = () => {
+const UserPage = () => {
   let { id } = useParams();
-  return <Post id={id} />;
+  return 1;
 };
 
-export default PostPage;
+export default UserPage;

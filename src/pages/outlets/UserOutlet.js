@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 
-const PostsOutlet = () => {
+const UserOutlet = () => {
   return <Outlet />;
 };
 
-export default PostsOutlet;
+export default UserOutlet;

@@ -9,7 +9,7 @@ import UserMenu from "./components/UserMenu";
 import MapItems from "./components/MapItems";
 
 const pages = [
-  { name: "Posts", link: "posts" },
+  { name: "Manage User", link: "user" },
   { name: "Lorem", link: "/" },
   { name: "Ipsum", link: "/" },
 ];

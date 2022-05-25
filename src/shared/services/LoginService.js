@@ -20,23 +20,6 @@ export const setTokens = (tokens) => {
 export const getTokens = () => {
   let tokens = sessionStorage.getItem("tokens");
   if (tokens != null) return JSON.parse(tokens);
+
   return null;
 };
-
-export const displayError = ({ touched, err }) => {
-  if (!touched) return [false, ""];
-  if (touched) {
-    if (err) return [true, err];
-    if (!err) return [false, err];
-  }
-};
-
-// const [invalidUsername, textUsername] = getErrors({
-//   touched: touched.username,
-//   err: validateUsername(values.username),
-// });
-
-// const [invalidPassword, textPassword] = getErrors({
-//   touched: touched.username,
-//   err: validateUsername(values.password),
-// });
